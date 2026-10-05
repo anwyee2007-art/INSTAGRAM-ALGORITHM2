@@ -1,0 +1,6 @@
+{
+  "name": "The Algorithm - Instagram Ranking & Discovery Decoded",
+  "description": "An authoritative editorial publication explaining Instagram's algorithms, Reels distribution, Stories, Explore, SEO, and organic reach.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

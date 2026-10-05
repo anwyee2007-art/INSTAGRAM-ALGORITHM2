@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --color-ig-pink: #E1306C;
+  --color-ig-purple: #833AB4;
+  --color-ig-orange: #F77737;
+  --color-ig-yellow: #FCAF45;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: #171717;
+    background-color: #FAFAFA;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .font-serif-headline {
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom scrollbar for articles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
