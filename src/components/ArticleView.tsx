@@ -14,7 +14,8 @@ import {
   ChevronRight,
   ShieldCheck,
   Eye,
-  Type
+  Type,
+  Link2
 } from 'lucide-react';
 import { Article, CategorySlug } from '../types';
 import { ARTICLES } from '../data/articles';
@@ -56,13 +57,15 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
     (a.categorySlug === article.categorySlug && a.slug !== article.slug)
   ).slice(0, 3);
 
+  const shortUrl = `${window.location.origin}/${article.slug}`;
+
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
           title: article.title,
           text: article.subtitle,
-          url: window.location.href,
+          url: shortUrl,
         });
       } catch {
         // Fallback to copy link
@@ -74,7 +77,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(shortUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -168,6 +171,17 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
                   <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-neutral-900 text-neutral-900' : ''}`} />
                 </button>
               )}
+
+              {/* Short URL indicator & copy */}
+              <button
+                onClick={copyLink}
+                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-2 border border-neutral-200 hover:border-neutral-400 bg-white text-xs font-mono text-neutral-600 hover:text-neutral-900 transition-colors rounded-sm"
+                title={`Short URL: /${article.slug} (Click to copy)`}
+                aria-label="Copy short URL"
+              >
+                <Link2 className="w-3.5 h-3.5 text-neutral-400" />
+                <span className="text-[11px] text-neutral-500">/{article.slug}</span>
+              </button>
 
               {/* Share button */}
               <button

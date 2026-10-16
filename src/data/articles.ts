@@ -23,8 +23,9 @@ export const AUTHORS: Record<string, Author> = {
 
 export const ARTICLES: Article[] = [
   {
-    id: 'how-the-instagram-algorithm-works-in-2026',
-    slug: 'how-the-instagram-algorithm-works-in-2026',
+    id: 'algorithm-2026',
+    slug: 'algorithm-2026',
+    legacySlugs: ['how-the-instagram-algorithm-works-in-2026', 'how-does-the-instagram-algorithm-work-in-2026'],
     title: 'How Does the Instagram Algorithm Work in 2026?',
     subtitle: 'A technical and practical breakdown of Meta’s multi-system ranking architecture across Feed, Reels, Stories, Explore, and Search.',
     category: 'INSTAGRAM ALGORITHM',
@@ -132,15 +133,16 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
-      'how-watch-time-affects-instagram-reels',
-      'how-likes-comments-saves-shares-affect-reach',
-      'instagram-seo-how-to-make-content-discoverable'
+      'reels-viral',
+      'watch-time',
+      'signals-reach',
+      'instagram-seo'
     ]
   },
   {
-    id: 'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
-    slug: 'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
+    id: 'reels-viral',
+    slug: 'reels-viral',
+    legacySlugs: ['instagram-reels-algorithm-how-instagram-decides-what-goes-viral'],
     title: 'Instagram Reels Algorithm: How Instagram Decides What Goes Viral',
     subtitle: 'Inside the tiered testing batches, loop completions, and distribution waves that propel short-form video into millions of feeds.',
     category: 'REELS',
@@ -178,14 +180,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'why-your-instagram-reels-suddenly-stop-getting-views',
-      'how-watch-time-affects-instagram-reels',
-      'how-the-instagram-algorithm-works-in-2026'
+      'reels-200-views',
+      'watch-time',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'instagram-explore-page-algorithm-explained',
-    slug: 'instagram-explore-page-algorithm-explained',
+    id: 'explore-system',
+    slug: 'explore-system',
+    legacySlugs: ['instagram-explore-page-algorithm-explained'],
     title: 'Instagram Explore Page Algorithm Explained',
     subtitle: 'How machine learning embeddings, topical clustering, and lookalike audience models curate the discovery grid.',
     category: 'EXPLORE & DISCOVERY',
@@ -218,14 +221,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-the-instagram-algorithm-works-in-2026',
-      'instagram-seo-how-to-make-content-discoverable',
-      'hashtags-vs-keywords-what-actually-helps-reach'
+      'algorithm-2026',
+      'instagram-seo',
+      'hashtags-vs-keywords'
     ]
   },
   {
-    id: 'how-instagram-ranking-works-for-feed-posts',
-    slug: 'how-instagram-ranking-works-for-feed-posts',
+    id: 'feed-ranking',
+    slug: 'feed-ranking',
+    legacySlugs: ['how-instagram-ranking-works-for-feed-posts'],
     title: 'How Instagram Ranking Works for Feed Posts',
     subtitle: 'The five predictive mathematical scores that decide whether your posts appear at the top or bottom of your followers’ feeds.',
     category: 'FEED',
@@ -258,14 +262,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-likes-comments-saves-shares-affect-reach',
-      'does-posting-time-actually-matter-on-instagram',
-      'how-the-instagram-algorithm-works-in-2026'
+      'signals-reach',
+      'posting-time',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'instagram-stories-algorithm-why-some-stories-get-more-views',
-    slug: 'instagram-stories-algorithm-why-some-stories-get-more-views',
+    id: 'stories-views',
+    slug: 'stories-views',
+    legacySlugs: ['instagram-stories-algorithm-why-some-stories-get-more-views'],
     title: 'Instagram Stories Algorithm: Why Some Stories Get More Views',
     subtitle: 'Decoding bubble order, direct message signals, sticker completion metrics, and skip-rate penalties.',
     category: 'STORIES',
@@ -298,14 +303,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-the-instagram-algorithm-works-in-2026',
-      'how-likes-comments-saves-shares-affect-reach',
-      'how-to-increase-organic-reach-without-ads'
+      'algorithm-2026',
+      'signals-reach',
+      'organic-reach'
     ]
   },
   {
-    id: 'does-posting-time-actually-matter-on-instagram',
-    slug: 'does-posting-time-actually-matter-on-instagram',
+    id: 'posting-time',
+    slug: 'posting-time',
+    legacySlugs: ['does-posting-time-actually-matter-on-instagram'],
     title: 'Does Posting Time Actually Matter on Instagram?',
     subtitle: 'Separating chronological recency signals from algorithm dwell time and global audience distribution patterns.',
     category: 'INSTAGRAM ALGORITHM',
@@ -338,14 +344,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-the-instagram-algorithm-works-in-2026',
-      'how-instagram-ranking-works-for-feed-posts',
-      'how-to-increase-organic-reach-without-ads'
+      'algorithm-2026',
+      'feed-ranking',
+      'organic-reach'
     ]
   },
   {
-    id: 'how-likes-comments-saves-shares-affect-reach',
-    slug: 'how-likes-comments-saves-shares-affect-reach',
+    id: 'signals-reach',
+    slug: 'signals-reach',
+    legacySlugs: ['how-likes-comments-saves-shares-affect-reach'],
     title: 'How Likes, Comments, Saves & Shares Affect Instagram Reach',
     subtitle: 'The mathematical weight hierarchy of interactions: Why shares via DM outperform likes by an order of magnitude.',
     category: 'INSTAGRAM ALGORITHM',
@@ -378,14 +385,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-the-instagram-algorithm-works-in-2026',
-      'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
-      'how-to-increase-organic-reach-without-ads'
+      'algorithm-2026',
+      'reels-viral',
+      'organic-reach'
     ]
   },
   {
-    id: 'why-your-instagram-reels-suddenly-stop-getting-views',
-    slug: 'why-your-instagram-reels-suddenly-stop-getting-views',
+    id: 'reels-200-views',
+    slug: 'reels-200-views',
+    legacySlugs: ['why-your-instagram-reels-suddenly-stop-getting-views'],
     title: 'Why Your Instagram Reels Suddenly Stop Getting Views',
     subtitle: 'Diagnosing the dreaded "plateau at 200 views": retention cliff-hangers, original content deduplication, and community flags.',
     category: 'REELS',
@@ -418,14 +426,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
-      'how-watch-time-affects-instagram-reels',
-      'how-the-instagram-algorithm-works-in-2026'
+      'reels-viral',
+      'watch-time',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'hashtags-vs-keywords-what-actually-helps-reach',
-    slug: 'hashtags-vs-keywords-what-actually-helps-reach',
+    id: 'hashtags-vs-keywords',
+    slug: 'hashtags-vs-keywords',
+    legacySlugs: ['hashtags-vs-keywords-what-actually-helps-reach'],
     title: 'Hashtags vs Keywords: What Actually Helps Instagram Reach?',
     subtitle: 'The shift from hashtag spam to natural language processing and semantic search indexing on Meta platforms.',
     category: 'INSTAGRAM SEO',
@@ -458,14 +467,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'instagram-seo-how-to-make-content-discoverable',
-      'instagram-explore-page-algorithm-explained',
-      'how-the-instagram-algorithm-works-in-2026'
+      'instagram-seo',
+      'explore-system',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'how-watch-time-affects-instagram-reels',
-    slug: 'how-watch-time-affects-instagram-reels',
+    id: 'watch-time',
+    slug: 'watch-time',
+    legacySlugs: ['how-watch-time-affects-instagram-reels'],
     title: 'How Watch Time Affects Instagram Reels',
     subtitle: 'Analyzing loop rates, average percentage watched (APV), and the crucial first 3-second hook retention math.',
     category: 'REELS',
@@ -498,14 +508,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'instagram-reels-algorithm-how-instagram-decides-what-goes-viral',
-      'why-your-instagram-reels-suddenly-stop-getting-views',
-      'how-the-instagram-algorithm-works-in-2026'
+      'reels-viral',
+      'reels-200-views',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'instagram-seo-how-to-make-content-discoverable',
-    slug: 'instagram-seo-how-to-make-content-discoverable',
+    id: 'instagram-seo',
+    slug: 'instagram-seo',
+    legacySlugs: ['instagram-seo-how-to-make-content-discoverable'],
     title: 'Instagram SEO: How to Make Your Content Discoverable',
     subtitle: 'A complete playbook for ranking at the top of Instagram Search for high-intent industry queries.',
     category: 'INSTAGRAM SEO',
@@ -538,14 +549,15 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'hashtags-vs-keywords-what-actually-helps-reach',
-      'instagram-explore-page-algorithm-explained',
-      'how-the-instagram-algorithm-works-in-2026'
+      'hashtags-vs-keywords',
+      'explore-system',
+      'algorithm-2026'
     ]
   },
   {
-    id: 'how-to-increase-organic-reach-without-ads',
-    slug: 'how-to-increase-organic-reach-without-ads',
+    id: 'organic-reach',
+    slug: 'organic-reach',
+    legacySlugs: ['how-to-increase-organic-reach-without-ads'],
     title: 'How to Increase Organic Reach on Instagram Without Paid Ads',
     subtitle: 'Sustainable content frameworks, distribution testing, and community-first growth strategies that compound over time.',
     category: 'GROWTH',
@@ -578,9 +590,9 @@ export const ARTICLES: Article[] = [
       }
     ],
     relatedSlugs: [
-      'how-the-instagram-algorithm-works-in-2026',
-      'how-likes-comments-saves-shares-affect-reach',
-      'instagram-reels-algorithm-how-instagram-decides-what-goes-viral'
+      'algorithm-2026',
+      'signals-reach',
+      'reels-viral'
     ]
   }
 ];

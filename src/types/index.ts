@@ -50,6 +50,7 @@ export interface Article {
   isOfficialMetaConfirmed: boolean;
   sections: ArticleSection[];
   relatedSlugs: string[];
+  legacySlugs?: string[];
 }
 
 export type ViewState = 

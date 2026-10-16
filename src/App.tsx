@@ -60,6 +60,35 @@ export default function App() {
     } catch {}
   };
 
+  // Helper to sync meta tags and canonical URL for SEO
+  const updateSEOMetadata = (title: string, description: string, canonicalUrl: string) => {
+    document.title = title;
+    
+    // Update or create meta description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', description);
+
+    // Update or create canonical link
+    let linkCanonical = document.querySelector('link[rel="canonical"]');
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(linkCanonical);
+    }
+    linkCanonical.setAttribute('href', canonicalUrl);
+
+    // Update OpenGraph url & title
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', title);
+  };
+
   // Sync route state with browser URL path and popstate
   const navigateTo = (newView: ViewState, pushHistory = true) => {
     setViewState(newView);
@@ -70,7 +99,8 @@ export default function App() {
       if (newView.type === 'category') {
         path = `/${newView.categorySlug}`;
       } else if (newView.type === 'article') {
-        path = `/article/${newView.slug}`;
+        // Unique, short direct URL for each blog post (e.g. /algorithm-2026, /reels-viral)
+        path = `/${newView.slug}`;
       }
       if (window.location.pathname !== path) {
         window.history.pushState({ view: newView }, '', path);
@@ -78,7 +108,7 @@ export default function App() {
     }
   };
 
-  // Parse path on initial mount
+  // Parse path on initial mount & back/forward
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       if (event.state && event.state.view) {
@@ -89,28 +119,48 @@ export default function App() {
     };
 
     const parseCurrentPath = () => {
-      const path = window.location.pathname.replace(/^\/+/g, '');
-      if (!path) {
+      // Strip leading and trailing slashes
+      const rawPath = window.location.pathname.replace(/^\/+/g, '').replace(/\/+$/g, '');
+      if (!rawPath) {
         setViewState({ type: 'home' });
         return;
       }
 
-      if (path.startsWith('article/')) {
-        const slug = path.replace('article/', '');
-        const exists = ARTICLES.find(a => a.slug === slug);
-        if (exists) {
-          setViewState({ type: 'article', slug });
-          return;
-        }
+      // Check if it starts with optional prefixes (e.g. /article/slug, /read/slug, /p/slug)
+      let candidateSlug = rawPath;
+      if (candidateSlug.startsWith('article/')) {
+        candidateSlug = candidateSlug.replace('article/', '');
+      } else if (candidateSlug.startsWith('read/')) {
+        candidateSlug = candidateSlug.replace('read/', '');
+      } else if (candidateSlug.startsWith('p/')) {
+        candidateSlug = candidateSlug.replace('p/', '');
       }
 
-      const validCategories: CategorySlug[] = ['algorithm', 'reels', 'feed', 'stories', 'explore', 'seo', 'growth'];
-      if (validCategories.includes(path as CategorySlug)) {
-        setViewState({ type: 'category', categorySlug: path as CategorySlug });
+      // 1. Direct match on short article slug or legacy slug
+      const matchedArticle = ARTICLES.find(a => 
+        a.slug === candidateSlug || 
+        a.id === candidateSlug || 
+        a.legacySlugs?.includes(candidateSlug)
+      );
+
+      if (matchedArticle) {
+        setViewState({ type: 'article', slug: matchedArticle.slug });
+        // Normalize URL in browser to clean short URL if legacy or prefixed path was accessed
+        const cleanPath = `/${matchedArticle.slug}`;
+        if (window.location.pathname !== cleanPath) {
+          window.history.replaceState({ view: { type: 'article', slug: matchedArticle.slug } }, '', cleanPath);
+        }
         return;
       }
 
-      // Default home
+      // 2. Match dedicated category surface
+      const validCategories: CategorySlug[] = ['algorithm', 'reels', 'feed', 'stories', 'explore', 'seo', 'growth'];
+      if (validCategories.includes(candidateSlug as CategorySlug)) {
+        setViewState({ type: 'category', categorySlug: candidateSlug as CategorySlug });
+        return;
+      }
+
+      // Fallback: Home
       setViewState({ type: 'home' });
     };
 
@@ -119,26 +169,40 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Update document title dynamically
+  // Update document title & metadata dynamically
   useEffect(() => {
+    const origin = window.location.origin;
     if (viewState.type === 'article') {
       const art = ARTICLES.find(a => a.slug === viewState.slug);
       if (art) {
-        document.title = `${art.title} | THE ALGORITHM`;
+        updateSEOMetadata(
+          `${art.title} | THE ALGORITHM`,
+          art.description,
+          `${origin}/${art.slug}`
+        );
         return;
       }
     } else if (viewState.type === 'category') {
       const cat = CATEGORIES[viewState.categorySlug];
       if (cat) {
-        document.title = `${cat.name} Algorithm & Ranking | THE ALGORITHM`;
+        updateSEOMetadata(
+          `${cat.name} Algorithm & Ranking | THE ALGORITHM`,
+          cat.description,
+          `${origin}/${cat.id}`
+        );
         return;
       }
     }
-    document.title = 'THE ALGORITHM | Understanding the System Behind Your Reach';
+
+    updateSEOMetadata(
+      'THE ALGORITHM | Understanding the System Behind Your Reach',
+      'An authoritative editorial publication explaining Instagram algorithms, Reels distribution, Stories, Explore, SEO, and organic reach.',
+      origin
+    );
   }, [viewState]);
 
   // Pillar article
-  const pillarArticle = ARTICLES.find(a => a.slug === 'how-the-instagram-algorithm-works-in-2026') || ARTICLES[0];
+  const pillarArticle = ARTICLES.find(a => a.slug === 'algorithm-2026') || ARTICLES[0];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-neutral-900 selection:bg-neutral-900 selection:text-white">
