@@ -15,7 +15,10 @@ import {
   ShieldCheck,
   Eye,
   Type,
-  Link2
+  Link2,
+  ExternalLink,
+  HelpCircle,
+  Award
 } from 'lucide-react';
 import { Article, CategorySlug } from '../types';
 import { ARTICLES } from '../data/articles';
@@ -24,6 +27,8 @@ import { ReadingProgressBar } from './ReadingProgressBar';
 interface ArticleViewProps {
   article: Article;
   onBack: () => void;
+  onNavigateArticles?: () => void;
+  onNavigateQuiz?: () => void;
   onSelectArticle: (slug: string) => void;
   onSelectCategory: (categorySlug: CategorySlug) => void;
   isBookmarked?: boolean;
@@ -33,6 +38,8 @@ interface ArticleViewProps {
 export const ArticleView: React.FC<ArticleViewProps> = ({
   article,
   onBack,
+  onNavigateArticles,
+  onNavigateQuiz,
   onSelectArticle,
   onSelectCategory,
   isBookmarked = false,
@@ -68,7 +75,6 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
           url: shortUrl,
         });
       } catch {
-        // Fallback to copy link
         copyLink();
       }
     } else {
@@ -92,7 +98,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumbs" className="flex items-center gap-1.5 text-xs text-neutral-500 mb-8 font-mono">
+          <nav aria-label="Breadcrumb navigation" className="flex items-center flex-wrap gap-1.5 text-xs text-neutral-500 mb-8 font-mono">
             <button 
               onClick={onBack}
               className="hover:text-neutral-900 transition-colors cursor-pointer"
@@ -100,6 +106,17 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               Home
             </button>
             <ChevronRight className="w-3 h-3 text-neutral-400" />
+            {onNavigateArticles && (
+              <>
+                <button 
+                  onClick={onNavigateArticles}
+                  className="hover:text-neutral-900 transition-colors cursor-pointer"
+                >
+                  Articles
+                </button>
+                <ChevronRight className="w-3 h-3 text-neutral-400" />
+              </>
+            )}
             <button 
               onClick={() => onSelectCategory(article.categorySlug)}
               className="hover:text-neutral-900 transition-colors cursor-pointer uppercase font-semibold text-rose-600"
@@ -107,7 +124,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               {article.category}
             </button>
             <ChevronRight className="w-3 h-3 text-neutral-400" />
-            <span className="text-neutral-400 truncate max-w-[200px] sm:max-w-xs" title={article.title}>
+            <span className="text-neutral-400 truncate max-w-[180px] sm:max-w-xs" title={article.title}>
               {article.title}
             </span>
           </nav>
@@ -121,7 +138,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
             <span className="lowercase">{article.readTime}</span>
           </div>
 
-          {/* Large Headline */}
+          {/* Large Headline (H1 with main keyword naturally integrated) */}
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-neutral-900 tracking-tight leading-[1.1] mb-6">
             {article.title}
           </h1>
@@ -226,7 +243,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
                 Contents Index
               </h3>
               <ul className="space-y-2 text-xs">
-                {article.sections.map((section, idx) => (
+                {article.sections.map((section) => (
                   <li key={section.id}>
                     <a
                       href={`#${section.id}`}
@@ -236,7 +253,49 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
                     </a>
                   </li>
                 ))}
+                {article.faqs && article.faqs.length > 0 && (
+                  <li>
+                    <a
+                      href="#frequently-asked-questions"
+                      className="text-neutral-600 hover:text-rose-600 transition-colors font-semibold block py-0.5"
+                    >
+                      Frequently Asked Questions
+                    </a>
+                  </li>
+                )}
+                {article.metaSources && article.metaSources.length > 0 && (
+                  <li>
+                    <a
+                      href="#verified-sources"
+                      className="text-neutral-600 hover:text-rose-600 transition-colors font-semibold block py-0.5"
+                    >
+                      Official Meta Sources
+                    </a>
+                  </li>
+                )}
               </ul>
+
+              {/* Assessment Callout in Sidebar */}
+              {onNavigateQuiz && (
+                <div className="mt-6 pt-4 border-t border-neutral-200">
+                  <div className="p-3 bg-white border border-neutral-200 rounded-sm text-left">
+                    <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-neutral-900 mb-1">
+                      <Award className="w-3.5 h-3.5 text-rose-600" />
+                      <span>Algorithm Quiz</span>
+                    </div>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed mb-2.5">
+                      Test how well you understand the Instagram algorithm with our 10-question assessment.
+                    </p>
+                    <button
+                      onClick={onNavigateQuiz}
+                      className="text-xs font-semibold text-rose-600 hover:underline flex items-center gap-1"
+                    >
+                      <span>Take the Assessment</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Distinction Box */}
               <div className="mt-6 pt-4 border-t border-neutral-200 text-[11px] text-neutral-500 leading-relaxed font-sans">
@@ -270,16 +329,16 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               </ul>
             </div>
 
-            {/* Article Sections */}
+            {/* Article Sections (AEO Optimized H2 Questions + Direct Answers) */}
             <div className={`space-y-12 ${fontSizeMultiplier === 'large' ? 'text-lg' : 'text-base'}`}>
               {article.sections.map((section) => (
                 <section key={section.id} id={section.id} className="scroll-mt-24">
-                  {/* Subheading */}
+                  {/* Subheading phrased as high-intent search question */}
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight mb-4 pt-2 border-t border-neutral-100">
                     {section.title}
                   </h2>
 
-                  {/* Body Paragraphs */}
+                  {/* Body Paragraphs with concise direct answer leading the section */}
                   <div className="text-neutral-700 leading-relaxed whitespace-pre-line font-normal space-y-4 font-sans">
                     {section.content}
                   </div>
@@ -345,6 +404,64 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               ))}
             </div>
 
+            {/* AEO Frequently Asked Questions (FAQ) Section */}
+            {article.faqs && article.faqs.length > 0 && (
+              <section id="frequently-asked-questions" className="mt-16 pt-10 border-t-2 border-neutral-900 scroll-mt-24">
+                <div className="flex items-center gap-2 mb-2">
+                  <HelpCircle className="w-4 h-4 text-rose-600" />
+                  <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 font-bold">
+                    Direct Answers & FAQ
+                  </span>
+                </div>
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 mb-6">
+                  Frequently Asked Questions
+                </h2>
+
+                <div className="space-y-6">
+                  {article.faqs.map((faq, fIdx) => (
+                    <div key={fIdx} className="p-5 bg-neutral-50 border border-neutral-200 rounded-sm">
+                      <h3 className="font-serif text-lg font-bold text-neutral-900 mb-2">
+                        {faq.question}
+                      </h3>
+                      <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-sans">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Verified Meta Documentation Sources Section */}
+            {article.metaSources && article.metaSources.length > 0 && (
+              <section id="verified-sources" className="mt-12 pt-8 border-t border-neutral-200 scroll-mt-24">
+                <div className="flex items-center gap-2 mb-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 font-bold">
+                    Official Documentation & References
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-neutral-900 mb-4">
+                  Verified Meta & Instagram Sources
+                </h3>
+                <ul className="space-y-2">
+                  {article.metaSources.map((source, sIdx) => (
+                    <li key={sIdx}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-neutral-800 hover:text-rose-600 transition-colors underline underline-offset-4"
+                      >
+                        <span>{source.title}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             {/* Author Bio Box */}
             <div className="mt-16 pt-8 border-t border-neutral-200 bg-neutral-50 p-6 sm:p-7 rounded-sm">
               <div className="flex items-start gap-4">
@@ -362,16 +479,17 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               </div>
             </div>
 
-            {/* Previous / Next Article Navigation */}
+            {/* Previous / Next Article Navigation with Descriptive Anchor Texts */}
             <nav aria-label="Article pagination" className="mt-12 pt-6 border-t border-neutral-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {prevArticle ? (
                 <button
                   onClick={() => onSelectArticle(prevArticle.slug)}
                   className="p-4 border border-neutral-200 hover:border-neutral-900 text-left transition-all group flex flex-col justify-between"
+                  aria-label={`Read previous investigation: ${prevArticle.title}`}
                 >
                   <div className="flex items-center gap-1 text-xs text-neutral-400 font-mono uppercase mb-1">
                     <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
-                    <span>Previous Article</span>
+                    <span>Previous Guide</span>
                   </div>
                   <div className="text-sm font-semibold text-neutral-900 group-hover:text-rose-600 line-clamp-2">
                     {prevArticle.title}
@@ -383,9 +501,10 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
                 <button
                   onClick={() => onSelectArticle(nextArticle.slug)}
                   className="p-4 border border-neutral-200 hover:border-neutral-900 text-right transition-all group flex flex-col justify-between sm:items-end"
+                  aria-label={`Read next investigation: ${nextArticle.title}`}
                 >
                   <div className="flex items-center gap-1 text-xs text-neutral-400 font-mono uppercase mb-1">
-                    <span>Next Article</span>
+                    <span>Next Guide</span>
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                   <div className="text-sm font-semibold text-neutral-900 group-hover:text-rose-600 line-clamp-2">
@@ -406,12 +525,18 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-4 bg-neutral-900" />
                 <h3 className="text-xs uppercase tracking-widest font-mono font-bold text-neutral-900">
-                  Related Investigations
+                  Related Instagram Algorithm Investigations
                 </h3>
               </div>
-              <span className="text-xs font-mono text-neutral-400">
-                Continue Learning
-              </span>
+              {onNavigateArticles && (
+                <button
+                  onClick={onNavigateArticles}
+                  className="text-xs font-mono font-semibold text-rose-600 hover:underline flex items-center gap-1"
+                >
+                  <span>View all articles</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -440,7 +565,7 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
                     </p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-semibold text-neutral-900">
-                    <span>Read article</span>
+                    <span>Read investigation</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>

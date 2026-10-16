@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, ShieldCheck, Mail } from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck, Mail, Award, BookOpen } from 'lucide-react';
 import { CategorySlug } from '../types';
 
 interface FooterProps {
   onNavigateHome: () => void;
+  onNavigateArticles: () => void;
+  onNavigateQuiz: () => void;
   onNavigateCategory: (slug: CategorySlug) => void;
   onOpenAbout: () => void;
   onOpenContact: () => void;
@@ -11,6 +13,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigateHome,
+  onNavigateArticles,
+  onNavigateQuiz,
   onNavigateCategory,
   onOpenAbout,
   onOpenContact
@@ -39,10 +43,10 @@ export const Footer: React.FC<FooterProps> = ({
                 Monthly Technical Dispatch
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
-                Stay Ahead of Meta Algorithm Shifts
+                Stay Ahead of Instagram Algorithm Changes
               </h3>
               <p className="text-sm text-neutral-400 font-light max-w-lg leading-relaxed">
-                Receive our monthly breakdowns of undocumented ranking adjustments, retention engineering case studies, and empirical tests.
+                Receive monthly investigations covering the latest <strong>Instagram algorithm tips</strong>, undocumented ranking updates, and verified <strong>Instagram growth strategies</strong>.
               </p>
             </div>
 
@@ -52,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <Check className="w-5 h-5 text-emerald-400 shrink-0" />
                   <div className="text-xs">
                     <p className="font-bold">Subscription Confirmed</p>
-                    <p className="text-neutral-400">You are on the dispatch list. No spam, ever.</p>
+                    <p className="text-neutral-400">You are on the dispatch list. Zero spam, ever.</p>
                   </div>
                 </div>
               ) : (
@@ -88,6 +92,7 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               onClick={onNavigateHome}
               className="text-left cursor-pointer focus:outline-none"
+              aria-label="Navigate to The Algorithm Homepage"
             >
               <h2 className="font-serif text-3xl font-extrabold tracking-tight text-white">
                 THE ALGORITHM
@@ -97,7 +102,7 @@ export const Footer: React.FC<FooterProps> = ({
               "Understanding the system behind your reach."
             </p>
             <p className="text-xs text-neutral-400 leading-relaxed max-w-sm font-light">
-              An independent educational marketing publication dedicated to explaining Instagram ranking signals, content distribution mechanics, Reels engineering, and organic discovery.
+              An authoritative educational resource dedicated to explaining the <strong>Instagram algorithm</strong>, ranking signals, Reels distribution mechanics, and organic <strong>Instagram growth strategies</strong>.
             </p>
             <div className="flex items-center gap-2 text-xs font-mono text-neutral-500 pt-2">
               <ShieldCheck className="w-4 h-4 text-neutral-400" />
@@ -108,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Links Column 1: System Surfaces */}
           <div className="md:col-span-4 space-y-3">
             <h3 className="text-xs uppercase font-mono tracking-widest text-neutral-400 font-bold mb-4">
-              Systems & Surfaces
+              Algorithm Surfaces
             </h3>
             <ul className="space-y-2.5 text-xs text-neutral-300">
               <li>
@@ -116,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('algorithm')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Instagram Algorithm
+                  Instagram Algorithm Architecture
                 </button>
               </li>
               <li>
@@ -124,7 +129,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('reels')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Reels
+                  Reels Distribution & Watch Time
                 </button>
               </li>
               <li>
@@ -132,7 +137,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('stories')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Stories
+                  Stories Ranking & Retention
                 </button>
               </li>
               <li>
@@ -140,7 +145,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('explore')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Explore
+                  Explore Page Recommendation Engine
                 </button>
               </li>
               <li>
@@ -148,7 +153,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('seo')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Instagram SEO
+                  Instagram SEO & Keyword Discovery
                 </button>
               </li>
               <li>
@@ -156,24 +161,42 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigateCategory('growth')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Growth
+                  Organic Reach & Growth Strategies
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Links Column 2: Publication */}
+          {/* Links Column 2: Educational Resources */}
           <div className="md:col-span-3 space-y-3">
             <h3 className="text-xs uppercase font-mono tracking-widest text-neutral-400 font-bold mb-4">
-              Publication
+              Resources & Tests
             </h3>
             <ul className="space-y-2.5 text-xs text-neutral-300">
+              <li>
+                <button
+                  onClick={onNavigateArticles}
+                  className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-neutral-400" />
+                  <span>All Articles & Guides</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={onNavigateQuiz}
+                  className="hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5 text-rose-400 hover:text-rose-300"
+                >
+                  <Award className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Algorithm Knowledge Quiz</span>
+                </button>
+              </li>
               <li>
                 <button
                   onClick={onOpenAbout}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  About
+                  Editorial Charter & Methodology
                 </button>
               </li>
               <li>
@@ -181,21 +204,8 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={onOpenContact}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Contact
+                  Contact Editorial Desk
                 </button>
-              </li>
-              <li>
-                <button
-                  onClick={onNavigateHome}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  Pillar Architecture
-                </button>
-              </li>
-              <li>
-                <span className="text-neutral-500 cursor-not-allowed">
-                  Methodology & Telemetry
-                </span>
               </li>
             </ul>
           </div>
@@ -203,9 +213,9 @@ export const Footer: React.FC<FooterProps> = ({
 
         {/* Bottom Copyright */}
         <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 font-mono gap-4">
-          <p>© 2026 The Algorithm</p>
+          <p>© 2026 The Algorithm · Built for Creators, Founders & Marketers</p>
           <p className="text-center sm:text-right">
-            Designed for digital marketers, founders, and social media strategists.
+            Canonical Domain: <span className="text-neutral-400">instagramhacks.vercel.app</span>
           </p>
         </div>
       </div>

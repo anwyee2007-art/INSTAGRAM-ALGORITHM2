@@ -85,9 +85,10 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({
                   e.stopPropagation();
                   onSelect(article.slug);
                 }}
-                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-sm tracking-wide transition-all shadow-sm hover:shadow group-hover:bg-neutral-800"
+                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-neutral-900 hover:bg-neutral-800 text-white font-medium text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm hover:shadow group-hover:bg-neutral-800"
+                aria-label={`Read master guide: ${article.title}`}
               >
-                <span>Read Article</span>
+                <span>Read Master Guide</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>

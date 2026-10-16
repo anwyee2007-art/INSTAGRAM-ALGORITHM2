@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ChevronRight, ShieldCheck, Compass } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ShieldCheck, Compass, BookOpen } from 'lucide-react';
 import { CategorySlug, Article } from '../types';
 import { CATEGORIES } from '../data/categories';
 import { ARTICLES } from '../data/articles';
@@ -9,6 +9,7 @@ import { FeaturedArticle } from './FeaturedArticle';
 interface CategoryViewProps {
   categorySlug: CategorySlug;
   onBack: () => void;
+  onNavigateArticles?: () => void;
   onSelectArticle: (slug: string) => void;
   bookmarkedSlugs?: string[];
   onToggleBookmark?: (e: React.MouseEvent, slug: string) => void;
@@ -17,6 +18,7 @@ interface CategoryViewProps {
 export const CategoryView: React.FC<CategoryViewProps> = ({
   categorySlug,
   onBack,
+  onNavigateArticles,
   onSelectArticle,
   bookmarkedSlugs = [],
   onToggleBookmark
@@ -37,7 +39,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumbs" className="flex items-center gap-1.5 text-xs text-neutral-500 mb-6 font-mono">
+          <nav aria-label="Breadcrumb navigation" className="flex items-center gap-1.5 text-xs text-neutral-500 mb-6 font-mono">
             <button 
               onClick={onBack}
               className="hover:text-neutral-900 transition-colors cursor-pointer"
@@ -45,6 +47,17 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
               Home
             </button>
             <ChevronRight className="w-3 h-3 text-neutral-400" />
+            {onNavigateArticles && (
+              <>
+                <button 
+                  onClick={onNavigateArticles}
+                  className="hover:text-neutral-900 transition-colors cursor-pointer"
+                >
+                  Articles
+                </button>
+                <ChevronRight className="w-3 h-3 text-neutral-400" />
+              </>
+            )}
             <span className="text-neutral-900 font-semibold uppercase">
               {category.name}
             </span>
@@ -53,15 +66,15 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 mb-3 text-xs uppercase font-mono tracking-widest text-neutral-500">
               <span className="w-2 h-2 rounded-full bg-rose-600" />
-              <span>Surface Architecture Guide</span>
+              <span>Instagram Algorithm Surface Breakdown</span>
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 tracking-tight leading-[1.08] mb-4">
               {category.name}
             </h1>
 
-            <p className="text-lg sm:text-xl text-neutral-600 font-light leading-relaxed mb-8">
-              {category.tagline}
+            <p className="text-lg sm:text-xl text-neutral-600 font-light leading-relaxed mb-6">
+              {category.tagline}. Explore verified <strong>Instagram algorithm tips</strong> and actionable <strong>Instagram growth strategies</strong> specific to this surface.
             </p>
 
             <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-normal bg-white p-5 border border-neutral-200 shadow-xs">
@@ -73,7 +86,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
           <div className="mt-8 pt-6 border-t border-neutral-200">
             <div className="text-xs uppercase font-mono tracking-wider text-neutral-400 mb-3 flex items-center gap-2">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Core Ranking Signals for this Surface:</span>
+              <span>Primary Instagram Algorithm Ranking Signals for this Surface:</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {category.coreSignals.map((signal, idx) => (
@@ -103,7 +116,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
               In-Depth Articles · {category.name}
             </h2>
             <p className="text-sm text-neutral-500 mt-1">
-              {categoryArticles.length} guides available in this domain
+              Explore key Instagram algorithm tips and strategies in this domain ({categoryArticles.length} guides)
             </p>
           </div>
         </div>
@@ -123,7 +136,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
         ) : (
           <div className="py-8 bg-neutral-50 border border-neutral-200 text-center p-8">
             <p className="text-sm text-neutral-600">
-              Additional deep dives are being indexed for {category.name}. Explore the featured master guide above.
+              Review our featured guide above to master the ranking mechanics for {category.name}.
             </p>
           </div>
         )}
